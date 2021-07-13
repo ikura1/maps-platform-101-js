@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import MarkerClusterer from "@google/markerclustererplus"
+
 function loadMapsJSAPI() {
   const googleMapsAPIKey = "AIzaSyDxduAHWk4xW4lbJaLYpMjVG5nwYuAD6CA"
   const googleMapsAPIURI = `https://maps.googleapis.com/maps/api/js?key=${googleMapsAPIKey}&callback=runApp`
@@ -31,6 +33,7 @@ function loadMapsJSAPI() {
 function runApp() {
   const map = displayMap()
   const markers = addMarkers(map)
+  clusterMarkers(map, markers)
 }
 
 function displayMap() {
@@ -74,6 +77,11 @@ function addMarkers(map) {
     markers.push(marker)
   }
   return markers
+}
+
+function clusterMarkers(map, markers) {
+  const clustererOptions = { imagePath: "./img/m" }
+  const markerClusterer = new MarkerClusterer(map, markers, clustererOptions)
 }
 
 loadMapsJSAPI()
