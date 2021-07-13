@@ -86,13 +86,31 @@ function clusterMarkers(map, markers) {
 }
 
 function addPanToMarker(map, markers) {
+  let circle
   markers.map((marker) => {
     marker.addListener("click", (event) => {
       const location = { lat: event.latLng.lat(), lng: event.latLng.lng() }
       map.panTo(location)
+      if (circle) {
+        circle.setMap(null)
+      }
+      circle = drawCircle(map, location)
     })
   })
   return markers
+}
+
+function drawCircle(map, location) {
+  const circleOptions = {
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    map: map,
+    center: location,
+    radius: 800,
+  }
+  const circle = new google.maps.Circle(circleOptions)
+  return circle
 }
 
 loadMapsJSAPI()
