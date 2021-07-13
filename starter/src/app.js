@@ -34,6 +34,7 @@ function runApp() {
   const map = displayMap()
   const markers = addMarkers(map)
   clusterMarkers(map, markers)
+  addPanToMarker(map, markers)
 }
 
 function displayMap() {
@@ -82,6 +83,16 @@ function addMarkers(map) {
 function clusterMarkers(map, markers) {
   const clustererOptions = { imagePath: "./img/m" }
   const markerClusterer = new MarkerClusterer(map, markers, clustererOptions)
+}
+
+function addPanToMarker(map, markers) {
+  markers.map((marker) => {
+    marker.addListener("click", (event) => {
+      const location = { lat: event.latLng.lat(), lng: event.latLng.lng() }
+      map.panTo(location)
+    })
+  })
+  return markers
 }
 
 loadMapsJSAPI()
